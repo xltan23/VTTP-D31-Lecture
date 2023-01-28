@@ -1,0 +1,87 @@
+<h4>{{ title }}</h4>
+
+<!-- Conditional statement that only displays if condition1 is achieved -->
+<h5 *ngIf="condition1">{{ conditionalText }}</h5>
+
+<!-- Radio button that triggers different response -->
+<input type="radio" (click)="Onclick(true)">True
+<input type="radio" (click)="Onclick(false)">False
+<div *ngIf="condition2; then ifBlock, else elseBlock"></div>
+<!-- Create if-else blocks -->
+<ng-template #ifBlock>
+    <p>This is the IF block</p>
+</ng-template>
+<ng-template #elseBlock>
+    <p>This is the ELSE block</p>
+</ng-template>
+
+<!-- Create select list -->
+<select (change)="SetColor($event)">
+    <option value="">--Select color---</option>
+    <option value="R">Red</option>
+    <option value="O">Orange</option>
+    <option value="Y">Yellow</option>
+    <option value="G">Green</option>
+    <option value="B">Blue</option>
+    <option value="I">Indigo</option>
+    <option value="V">Violet</option>
+</select>
+<!-- Colour change sentences -->
+<div [ngSwitch]="color">
+    <div *ngSwitchCase="'R'">
+        <p style="color:red">This sentence colour is changed.</p>
+    </div>
+    <div *ngSwitchCase="'O'">
+        <p style="color:orange">This sentence colour is changed.</p>
+    </div>
+    <div *ngSwitchCase="'Y'">
+        <p style="color:yellow">This sentence colour is changed.</p>
+    </div>
+    <div *ngSwitchCase="'G'">
+        <p style="color:green">This sentence colour is changed.</p>
+    </div>
+    <div *ngSwitchCase="'B'">
+        <p style="color:blue">This sentence colour is changed.</p>
+    </div>
+    <div *ngSwitchCase="'I'">
+        <p style="color:indigo">This sentence colour is changed.</p>
+    </div>
+    <div *ngSwitchCase="'V'">
+        <p style="color:violet">This sentence colour is changed.</p>
+    </div>
+    <div *ngSwitchDefault="">
+        <p style="color:black">This sentence colour is changed.</p>
+    </div>
+</div>
+<br>
+<table border="1">
+    <thead>
+        <th>S/No</th>
+        <th>Name</th>
+        <th>Age</th>
+        <th>Gender</th>
+        <th>First?</th>
+        <th>Last?</th>
+    </thead>
+    <tbody>
+        <!-- isFirst/isLast are boolean values that check if the record is first/last in list -->
+        <!-- isEven/isOdd are boolean values that check if record is even/odd in list -->
+        <!-- [ngStyle] works like CSS-->
+        <tr *ngFor="let e of Employee; let i = index; first as isFirst; last as isLast;
+        even as isEven; odd as isOdd" [ngStyle]="{'color':isEven? 'purple':'blue'}">
+            <td>{{ i + 1 }}</td>
+            <td>{{ e.Name }}</td>
+            <td [ngStyle]="{'color':CheckAge(e.Age)}">{{ e.Age }}</td>
+            <td>{{ e.Gender }}</td>
+            <td>{{ isFirst }}</td>
+            <td>{{ isLast }}</td>
+        </tr>
+    </tbody>
+</table>
+<br>
+<button (click)="GetMoreEmployee()">Add more employees</button>
+<br>
+<!-- Input new name for employee -->
+Enter employee name: <input type="text" [value]="employee" (input)="employee=$any($event.target).value">
+<br>
+Updated employee name: {{ employee }}
